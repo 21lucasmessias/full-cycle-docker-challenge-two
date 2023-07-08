@@ -1,0 +1,24 @@
+version: "3"
+name: full-cycle-nginx-node
+services:
+  node-server:
+    container_name: node-server
+    image: 21lucasmessias/full-cycle:node-v6
+    ports:
+      - 8080:8080
+    networks:
+      - full-cycle-network
+
+  nginx:
+    container_name: nginx
+    image: 21lucasmessias/full-cycle:nginx-reverse-proxy-node-v2
+    ports:
+      - 80:80
+    networks:
+      - full-cycle-network
+    depends_on:
+      - node-server
+
+networks:
+  full-cycle-network:
+    driver: bridge
