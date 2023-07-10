@@ -3,7 +3,7 @@ name: full-cycle-nginx-node
 services:
   mysqldb:
     container_name: mysqldb
-    image: 21lucasmessias/full-cycle:nginx-reverse-proxy-mysql-v6
+    build: ./mysql
     ports:
       - 3306:3306
     volumes:
@@ -13,7 +13,7 @@ services:
 
   node-server:
     container_name: node-server
-    image: 21lucasmessias/full-cycle:nginx-reverse-proxy-node-v18
+    build: ./node
     ports:
       - 8080:8080
     networks:
@@ -23,7 +23,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: 21lucasmessias/full-cycle:nginx-reverse-proxy-nginx-v2
+    build: ./nginx
     ports:
       - 80:80
     networks:
