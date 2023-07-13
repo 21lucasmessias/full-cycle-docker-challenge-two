@@ -18,8 +18,12 @@ services:
       - 8080:8080
     networks:
       - full-cycle-network
+    volumes:
+      - ./node/volume:/volume
     depends_on:
       - mysqldb
+    tty: true
+    entrypoint: dockerize -wait tcp://mysqldb:3306 -timeout 50s node src/main.js
 
   nginx:
     container_name: nginx

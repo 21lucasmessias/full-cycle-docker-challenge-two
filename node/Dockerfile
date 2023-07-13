@@ -2,6 +2,13 @@ FROM node:18-slim
 
 WORKDIR /nodejs/app
 
+ENV DOCKERIZE_VERSION v0.7.0
+
+RUN apt-get update \
+    && apt-get install -y wget \
+    && wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin \
+    && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
+
 COPY package.json ./
 RUN npm install
 COPY . .
@@ -9,5 +16,3 @@ COPY . .
 ENV SERVER_PORT=8080
 
 EXPOSE 8080
-
-CMD ["node", "src/main.js"]
